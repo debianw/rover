@@ -1,0 +1,17 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "clean": "npx lerna clean -y",
+    "setup": "npx lerna clean -y && npx lerna bootstrap",
+    "cli": "lerna run cli",
+    "test": "lerna run test --scope=@rover/core"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
