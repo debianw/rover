@@ -32,20 +32,26 @@ exports.fetchImageByIndex = fetchImageByIndex;
 /**
  * @returns Async Iterator
  */
-exports.roverIterator = () => {
+exports.roverIterator = (skip = 0, limit) => {
   const imageIterator = {
     [Symbol.asyncIterator]() {
       return {
-        idx: 1,
+        idx: skip,
         async next() {
+          if (limit > 0 && this.idx === skip + limit) {
+            return { done: true, value: null, index: this.idx };
+          }
+
           const image = await fetchImageByIndex(this.idx);
           if (!image) {
-            return { done: true, value: image };
+            return { done: true, value: image, index: this.idx };
           }
+
 
           this.idx++;
 
           return {
+            index: this.idx,
             value: image,
             done: false,
           }

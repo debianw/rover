@@ -1,13 +1,18 @@
 {
   "name": "@rover/cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cli": "node ./index.js",
+    "cli": "node ./cli.js",
     "test": "echo run cli tests && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "single-line-log": "^1.1.2",
+    "yargs": "^17.1.1"
+  }
 }
