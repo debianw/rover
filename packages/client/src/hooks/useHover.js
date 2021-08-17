@@ -9,6 +9,7 @@ const useHover = ({
   const onOutRef = useRef(onOut);
 
   useEffect(() => {
+    if (!el) return;
     const onEnterListener = onEnterRef.current;
     const onOutListener = onOutRef.current;
 

@@ -3,7 +3,7 @@ import Slider from "../components/slider/Slider";
 
 const SlideShowScreen = () => {
   const queryParams = useQueryParams();
-  const speed = +(queryParams.get('speed') || 1000);
+  const speed = +(queryParams.get('speed') || 5000);
 
   return (
     <>

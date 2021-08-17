@@ -34,11 +34,16 @@
 .description {
   position: absolute;
   top: 50%;
-  z-index: 2;
+  z-index: 4;
+}
+
+.image_container {
+  position: relative;
 }
 
 .btn {
   margin-right: 12px;
+  cursor: pointer;
 }
 
 .centered {
@@ -50,8 +55,4 @@
   left: 0;
   align-items: center;
   justify-content: center;
-}
-
-.imageLink {
-  width: 100%;
 }
