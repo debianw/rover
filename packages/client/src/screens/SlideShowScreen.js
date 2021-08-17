@@ -1,5 +1,5 @@
 import useQueryParams from "../hooks/useQueryParams";
-import Slider from "../components/Slider";
+import Slider from "../components/slider/Slider";
 
 const SlideShowScreen = () => {
   const queryParams = useQueryParams();

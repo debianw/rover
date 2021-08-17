@@ -30,6 +30,15 @@ const fetchImageByIndex = async (idx) => {
 exports.fetchImageByIndex = fetchImageByIndex;
 
 /**
+ * Fetch Term Rover Info 
+ * @returns 
+ */
+exports.fetchTermRoverInfo = async () => {
+  const response = await axios.get(`${config.api}/`);
+  return response.data;
+};
+
+/**
  * @returns Async Iterator
  */
 exports.roverIterator = (skip = 0, limit) => {

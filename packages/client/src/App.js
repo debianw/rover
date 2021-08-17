@@ -1,14 +1,11 @@
-import './App.css';
-import Router from './Router';
-import Providers from './Providers';
+import "./App.css";
+import Router from "./Router";
 
 function App() {
   return (
-    <Providers>
-      <div className="root-container">
-        <Router />
-      </div>
-    </Providers>
+    <div className="root-container">
+      <Router />
+    </div>
   );
 }
 

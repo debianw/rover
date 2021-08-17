@@ -1,0 +1,39 @@
+.root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+.mask {
+  background: rgba(45, 45, 45, 0.56);
+  padding: 16px;
+}
+
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
+}
+
+.description {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+}
+
+.btn {
+  margin-right: 12px;
+}
