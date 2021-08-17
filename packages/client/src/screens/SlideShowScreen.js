@@ -7,7 +7,10 @@ const SlideShowScreen = () => {
 
   return (
     <>
-      <Slider speed={speed} />
+      <Slider
+        speed={speed}
+        batchLimit={10}
+      />
     </>
   )
 };
