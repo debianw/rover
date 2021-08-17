@@ -1,10 +1,11 @@
 import { useParams } from "react-router";
+import SingleImage from "../components/slider/SingleImage";
 
 const DetailScreen = () => {
-  const { imageIndex } = useParams();
+  const { index } = useParams();
 
   return (
-    <h1>DetailScreen ({imageIndex})</h1>
+    <SingleImage index={index} />
   )
 };
 

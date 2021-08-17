@@ -12,7 +12,7 @@ const useQueryRover = ({ speed, limit = 6 }) => {
   const [cache, setCache] = useState([]);
   const [index, setIndex] = useState(-1);
   const [isPrefetching, setIsPrefetching] = useState(false);
-  const [isPaused, setIsPause] = useState(true);
+  const [isPaused, setIsPause] = useState(false);
   const nextImage = useMemo(() => {
     return cache[index];
   }, [cache, index]);
@@ -26,8 +26,6 @@ const useQueryRover = ({ speed, limit = 6 }) => {
       try {
         const response = await fetchTermRoverInfo();
         setTermRoverInfo(response);
-        // Play
-        setIsPause(false);
       } catch(error) {
         console.log('Error getting term rover info');
       }
@@ -39,7 +37,6 @@ const useQueryRover = ({ speed, limit = 6 }) => {
     if (isPrefetching) return;
 
     if (!cache?.[index + limit/2]) {
-      console.log("Prefetching ...");
       setIsPrefetching(true);
 
       const skip = cache.length;

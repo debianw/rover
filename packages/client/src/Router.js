@@ -6,7 +6,7 @@ export default function AppRouter() {
   return (
     <Router>
       <Switch>
-        <Route path="/:imageIndex">
+        <Route path="/:index">
           <DetailScreen />
         </Route>
         <Route path="/">
