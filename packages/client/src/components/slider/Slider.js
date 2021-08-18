@@ -38,6 +38,10 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
     },
   });
 
+  if (!nextImage) {
+    return <div className={styles.centered}>Loading ...</div>
+  }
+
   return (
     <Container>
       <div className={styles.centered}>
@@ -48,10 +52,10 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
                 <h4>
                   {nextImage.index} of {totalOfImages}
                 </h4>
-                <h5>cache: {cacheSize}</h5>
+                <h5 data-testid="cache-info">cache: {cacheSize}</h5>
               </div>
               <Link className={styles.imageLink} to={`/${index}`}>
-                <img src={nextImage.src} alt="Mars" />
+                <img src={nextImage.src} alt={`pic-${nextImage.metadata.id}`} />
               </Link>
 
               {showDetails && (
@@ -63,12 +67,14 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
 
               <div className={classnames(styles.actions, styles.mask)}>
                 <ArrowButton
+                  data-testid="left-button"
                   className={styles.btn}
                   hide={index <= 0}
                   direction="left"
                   onClick={goPrev}
                 />
                 <ArrowButton
+                  data-testid="right-button"
                   className={styles.btn}
                   direction="right"
                   onClick={goNext}
