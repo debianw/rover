@@ -7,7 +7,8 @@
   },
   "scripts": {
     "clean": "npx lerna clean -y",
-    "setup": "npx lerna clean -y && npx lerna bootstrap"
+    "setup": "npx lerna clean -y && npx lerna bootstrap",
+    "test": "yarn workspaces run test"
   },
   "workspaces": [
     "packages/*"

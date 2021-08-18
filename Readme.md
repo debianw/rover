@@ -16,7 +16,7 @@ $ yarn start
 ## Run Tests
 
 ```
-$ yarn workspaces run test
+$ yarn test
 ```
 
 ## License
