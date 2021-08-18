@@ -1,21 +1,20 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { roverIterator, fetchTermRoverInfo } from "@rover/core/rover";
 import useInterval from "./useInterval";
 
 /**
- * Custom hook to query term rover 
- * @param {*} param0 
- * @returns 
+ * Custom hook to query term rover
+ * @param {*} param0
+ * @returns
  */
-const useQueryRover = ({ speed, limit = 6 }) => {
+const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   const [termRoverInfo, setTermRoverInfo] = useState(null);
-  const [cache, setCache] = useState([]);
+  // const [cache, setCache] = useState([]);
   const [index, setIndex] = useState(-1);
   const [isPrefetching, setIsPrefetching] = useState(false);
   const [isPaused, setIsPause] = useState(false);
-  const nextImage = useMemo(() => {
-    return cache[index];
-  }, [cache, index]);
+  const cacheRef = useRef([]);
+  
   const totalOfImages = useMemo(() => {
     return termRoverInfo?.numImages || 0;
   }, [termRoverInfo?.numImages]);
@@ -26,8 +25,8 @@ const useQueryRover = ({ speed, limit = 6 }) => {
       try {
         const response = await fetchTermRoverInfo();
         setTermRoverInfo(response);
-      } catch(error) {
-        console.log('Error getting term rover info');
+      } catch (error) {
+        console.log("Error getting term rover info");
       }
     })();
   }, []);
@@ -36,55 +35,58 @@ const useQueryRover = ({ speed, limit = 6 }) => {
   const prefetch = useCallback(async () => {
     if (isPrefetching) return;
 
-    if (!cache?.[index + limit/2]) {
+    // prevent loading more if cache reach the total images
+    if (cacheRef.current.length > 0 && cacheRef.current.length === totalOfImages) return;
+
+    if (!cacheRef.current?.[index + limit / 2]) {
       setIsPrefetching(true);
 
-      const skip = cache.length;
+      const skip = cacheRef.current.length;
       const iterator = roverIterator(skip, limit);
+      const images = [];
       for await (const value of iterator) {
-        setCache((oldCache) => [
-          ...oldCache,
-          {
-            src: value.images.base64,
-            metadata: value.metadata,
-            index: value.index,
-          },
-        ]);
+        images.push({
+          src: value.images.base64,
+          metadata: value.metadata,
+          index: value.index,
+        });
       }
 
+      cacheRef.current = [...cacheRef.current, ...images];
       setIsPrefetching(false);
     }
-  }, [cache, index, isPrefetching, limit]);
+  }, [index, isPrefetching, limit, totalOfImages]);
 
   // -- Set next index
   const incrementIndex = useCallback(() => {
     setIndex((oldIndex) => {
       const nextIndex = oldIndex + 1;
-      if (nextIndex === totalOfImages-1) return 0;
+      if (nextIndex === totalOfImages - 1) return 0;
       return nextIndex;
     });
   }, [totalOfImages]);
 
   // -- Go next
   const goNext = useCallback(() => {
-    // setIsPause(true);
     incrementIndex();
     prefetch();
   }, [incrementIndex, prefetch]);
 
   // -- Go prev
   const goPrev = useCallback(() => {
-    // setIsPause(true);
     setIndex((oldIndex) => oldIndex - 1);
   }, []);
 
   // -- interval
-  const interval = isPaused
-    ? null
-    : index === -1 ? 0 : speed;
+  const interval = isPaused ? null : index === -1 ? 0 : speed;
   useInterval(() => {
     incrementIndex();
     prefetch();
+
+    if (!autoPlay) {
+      setIsPause(true);
+      return;
+    }
   }, interval);
 
   // -- pause/play
@@ -104,13 +106,14 @@ const useQueryRover = ({ speed, limit = 6 }) => {
     index,
     goNext,
     goPrev,
-    nextImage,
+    nextImage: cacheRef.current[index],
     isPaused,
     togglePause,
     pause,
     play,
     totalOfImages,
-    cacheSize: cache.length,
+    isPrefetching,
+    cacheSize: cacheRef.current.length,
   };
 };
 
