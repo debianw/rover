@@ -7,8 +7,7 @@
   },
   "scripts": {
     "clean": "npx lerna clean -y",
-    "setup": "npx lerna clean -y && npx lerna bootstrap",
-    "test": "lerna run test --scope=@rover/core"
+    "setup": "npx lerna clean -y && npx lerna bootstrap"
   },
   "workspaces": [
     "packages/*"
