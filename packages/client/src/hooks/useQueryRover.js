@@ -7,7 +7,7 @@ import useInterval from "./useInterval";
  * @param {*} param0 
  * @returns 
  */
-const useQueryRover = ({ speed, limit = 6 }) => {
+const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   const [termRoverInfo, setTermRoverInfo] = useState(null);
   const [cache, setCache] = useState([]);
   const [index, setIndex] = useState(-1);
@@ -85,6 +85,11 @@ const useQueryRover = ({ speed, limit = 6 }) => {
   useInterval(() => {
     incrementIndex();
     prefetch();
+
+    if (!autoPlay) {
+      setIsPause(true);
+      return;
+    }
   }, interval);
 
   // -- pause/play

@@ -7,7 +7,7 @@ import styles from "./slider.module.css";
 import useHover from "../../hooks/useHover";
 import Container from "./Container";
 
-const Slider = ({ speed = 5000, batchLimit = 6 }) => {
+const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
   const [showDetails, setShowDetails] = useState(false);
   const imageRef = useRef(null);
 
@@ -21,6 +21,7 @@ const Slider = ({ speed = 5000, batchLimit = 6 }) => {
     pause,
     play,
   } = useQueryRover({
+    autoPlay,
     speed,
     limit: batchLimit,
   });
