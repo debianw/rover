@@ -23,7 +23,7 @@ const images = [
       "ascii":"ascii source",
       "base64": "base64 source"
     },
-    "index": "1"
+    "index": "0"
   },
   {
     "metadata": {
@@ -49,7 +49,7 @@ const images = [
       "ascii":"ascii source",
       "base64": "base64 source"
     },
-    "index": "2"
+    "index": "1"
   },
   {
     "metadata": {
@@ -75,7 +75,7 @@ const images = [
       "ascii":"ascii source",
       "base64": "base64 source"
     },
-    "index": "3"
+    "index": "2"
   }
 ]
 

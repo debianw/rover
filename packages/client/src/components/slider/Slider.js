@@ -38,19 +38,16 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
     },
   });
 
-  if (!nextImage) {
-    return <div className={styles.centered}>Loading ...</div>
-  }
-
   return (
     <Container>
+      <div className={styles.centered}>Loading ...</div>
       <div className={styles.centered}>
         <div ref={imageRef} className={styles.image_container}>
           {nextImage && (
             <>
               <div className={classnames(styles.header, styles.mask)}>
-                <h4>
-                  {nextImage.index} of {totalOfImages}
+                <h4 data-testid="counter-info">
+                  {+nextImage.index+1} of {totalOfImages}
                 </h4>
                 <h5 data-testid="cache-info">cache: {cacheSize}</h5>
               </div>

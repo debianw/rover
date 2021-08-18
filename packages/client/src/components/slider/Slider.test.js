@@ -43,33 +43,24 @@ afterEach(() => server.resetHandlers());
 afterAll(() => {
   server.close();
   jest.useRealTimers();
-});
-
-// --
-test("Should render Slider", async () => {
-  const { getByAltText } = render(
-    <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
-  );
-
-  await waitFor(() =>
-    expect(getByAltText("pic-810961")).toBeInTheDocument()
-  );
 }); 
 
 // --
 test("Should render first Image", async () => {
-  const { getByAltText } = render(
+  const { getByText, getByAltText } = render(
     <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
   );
 
   await waitFor(() =>
     expect(getByAltText("pic-810961")).toBeInTheDocument()
   );
+
+  expect(getByText("1 of 3")).toBeInTheDocument();
 });
 
 // --
 test("Should go next", async () => {
-  const { getByTestId, getByAltText } = render(
+  const { getByText, getByTestId, getByAltText } = render(
     <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
   );
 
@@ -77,25 +68,57 @@ test("Should go next", async () => {
     expect(getByAltText("pic-810961")).toBeInTheDocument()
   );
 
+  expect(getByText("1 of 3")).toBeInTheDocument();
+
   // confirm there's a right button
   const rightButton = getByTestId("right-button");
   expect(rightButton).toBeInTheDocument();
 
-  // go to next image
+  // go to next image #2
   act(() => {
     userEvent.click(rightButton);
   });
+
+  expect(getByText("2 of 3")).toBeInTheDocument();
+
+  await waitFor(() =>
+    expect(getByAltText("pic-810962")).toBeInTheDocument()
+  );
+  
+  // go to next image #3
+  act(() => {
+    userEvent.click(rightButton);
+  });
+
+  expect(getByText("3 of 3")).toBeInTheDocument();
+
+  await waitFor(() =>
+    expect(getByAltText("pic-810963")).toBeInTheDocument()
+  );
+
+  // should go back to image #1 
+  act(() => {
+    userEvent.click(rightButton);
+  });
+
+  expect(getByText("1 of 3")).toBeInTheDocument();
+
+  await waitFor(() =>
+    expect(getByAltText("pic-810961")).toBeInTheDocument()
+  );
 });
 
 // --
 test("Should go prev", async () => {
-  const { getByTestId, getByAltText } = render(
+  const { getByText, getByTestId, getByAltText } = render(
     <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
   );
 
   await waitFor(() =>
     expect(getByAltText("pic-810961")).toBeInTheDocument()
   );
+
+  expect(getByText("1 of 3")).toBeInTheDocument();
 
   // confirm there's a right button
   const rightButton = getByTestId("right-button");
@@ -105,6 +128,8 @@ test("Should go prev", async () => {
   act(() => {
     userEvent.click(rightButton);
   });
+
+  expect(getByText("2 of 3")).toBeInTheDocument();
 
   // confirm there's a left button
   const leftButton = getByTestId("left-button");
@@ -114,5 +139,8 @@ test("Should go prev", async () => {
   act(() => {
     userEvent.click(leftButton);
   });
+
   await waitFor(() => expect(getByAltText("pic-810961")).toBeInTheDocument());
+
+  expect(getByText("1 of 3")).toBeInTheDocument();
 });

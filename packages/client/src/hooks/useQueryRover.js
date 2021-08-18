@@ -61,7 +61,7 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   const incrementIndex = useCallback(() => {
     setIndex((oldIndex) => {
       const nextIndex = oldIndex + 1;
-      if (nextIndex === totalOfImages - 1) return 0;
+      if (nextIndex === totalOfImages) return 0;
       return nextIndex;
     });
   }, [totalOfImages]);
