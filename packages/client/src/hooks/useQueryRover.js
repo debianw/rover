@@ -71,14 +71,14 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   // -- Go next
   const goNext = useCallback(() => {
     incrementIndex();
-    prefetch();
-  }, [incrementIndex, prefetch]);
+  }, [incrementIndex]);
 
   // -- Go prev
   const goPrev = useCallback(() => {
     setIndex((oldIndex) => oldIndex - 1);
   }, []);
 
+  // -- Prefetch when index change
   useEffect(() => {
     if (!isPrefetching)
       prefetch();
