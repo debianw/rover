@@ -48,7 +48,7 @@ afterAll(() => {
 // --
 test("Should render first Image", async () => {
   const { getByText, getByAltText } = render(
-    <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
+    <SliderRender autoPlay={false} />
   );
 
   await waitFor(() =>
@@ -61,7 +61,7 @@ test("Should render first Image", async () => {
 // --
 test("Should go next", async () => {
   const { getByText, getByTestId, getByAltText } = render(
-    <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
+    <SliderRender autoPlay={false} />
   );
 
   await waitFor(() =>
@@ -111,7 +111,7 @@ test("Should go next", async () => {
 // --
 test("Should go prev", async () => {
   const { getByText, getByTestId, getByAltText } = render(
-    <SliderRender autoPlay={false} speed={1000} batchLimit={10} />
+    <SliderRender autoPlay={false} />
   );
 
   await waitFor(() =>

@@ -38,7 +38,7 @@
 ## API
 
 ### fetchTermRoverInfo()
-Fetche termrover API information: (numImages, key)
+Fetch termrover API information: (numImages, key)
 ```js
   rover.fetchLastImage();
 ```
@@ -56,7 +56,7 @@ Fetch single image by index from termrover API
 ```
 
 ### roverIterator(index)
-Fetch single image by index from termrover API
+Iterate through rover images
 ```js
   const iterator = rover.roverIterator();
   for await (const image of iterator) {
