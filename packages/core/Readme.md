@@ -55,7 +55,7 @@ Fetch single image by index from termrover API
   rover.fetchImageByIndex();
 ```
 
-### roverIterator(index)
+### roverIterator()
 Iterate through rover images
 ```js
   const iterator = rover.roverIterator();
