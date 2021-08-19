@@ -9,11 +9,12 @@ import useInterval from "./useInterval";
  */
 const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   const [termRoverInfo, setTermRoverInfo] = useState(null);
-  // const [cache, setCache] = useState([]);
-  const [index, setIndex] = useState(-1);
+  const [isReady, setIsReady] = useState(false);
+  const [index, setIndex] = useState(0);
   const [isPrefetching, setIsPrefetching] = useState(false);
   const [isPaused, setIsPause] = useState(false);
   const cacheRef = useRef([]);
+  const canPlay = isPaused || !isReady || !autoPlay;
   
   const totalOfImages = useMemo(() => {
     return termRoverInfo?.numImages || 0;
@@ -54,6 +55,7 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
 
       cacheRef.current = [...cacheRef.current, ...images];
       setIsPrefetching(false);
+      setIsReady(true);
     }
   }, [index, isPrefetching, limit, totalOfImages]);
 
@@ -77,16 +79,15 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
     setIndex((oldIndex) => oldIndex - 1);
   }, []);
 
+  useEffect(() => {
+    if (!isPrefetching)
+      prefetch();
+  }, [index, isPrefetching, prefetch]);
+
   // -- interval
-  const interval = isPaused ? null : index === -1 ? 0 : speed;
+  const interval = canPlay ? null : speed;
   useInterval(() => {
     incrementIndex();
-    prefetch();
-
-    if (!autoPlay) {
-      setIsPause(true);
-      return;
-    }
   }, interval);
 
   // -- pause/play
@@ -113,6 +114,8 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
     play,
     totalOfImages,
     isPrefetching,
+    isReady,
+    cache: cacheRef.current,
     cacheSize: cacheRef.current.length,
   };
 };

@@ -8,6 +8,7 @@ const SlideShowScreen = () => {
   return (
     <>
       <Slider
+        autoPlay
         speed={speed}
         batchLimit={10}
       />

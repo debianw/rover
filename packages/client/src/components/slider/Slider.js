@@ -20,6 +20,7 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
     totalOfImages,
     pause,
     play,
+    isReady
   } = useQueryRover({
     autoPlay,
     speed,
@@ -38,9 +39,10 @@ const Slider = ({ speed = 5000, batchLimit = 6, autoPlay = true }) => {
     },
   });
 
+  if (!isReady) return <div className={styles.centered}>Loading ...</div>
+
   return (
     <Container>
-      <div className={styles.centered}>Loading ...</div>
       <div className={styles.centered}>
         <div ref={imageRef} className={styles.image_container}>
           {nextImage && (
