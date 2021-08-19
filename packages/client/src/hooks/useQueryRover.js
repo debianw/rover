@@ -14,7 +14,7 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   const [isPrefetching, setIsPrefetching] = useState(false);
   const [isPaused, setIsPause] = useState(false);
   const cacheRef = useRef([]);
-  const canPlay = isPaused || !isReady || !autoPlay;
+  const canNotPlay = isPaused || !isReady || !autoPlay;
   
   const totalOfImages = useMemo(() => {
     return termRoverInfo?.numImages || 0;
@@ -85,7 +85,7 @@ const useQueryRover = ({ speed, limit = 6, autoPlay = true }) => {
   }, [index, isPrefetching, prefetch]);
 
   // -- interval
-  const interval = canPlay ? null : speed;
+  const interval = canNotPlay ? null : speed;
   useInterval(() => {
     incrementIndex();
   }, interval);
